@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import 'bulma/css/bulma.css';
+import foods from './foods.json';
+import FoodBox from './components/FoodBox';
+import AddFood from './components/AddFood';
+import FoodSearch from './components/FoodSearch';
 
 function App() {
+  const [foodList, setfoodList] = useState(foods)
+  const [inputSearch, setInputSearch] = useState("")
+
+  const addNewFood = (newFood) => {
+    // console.log('NEWFOOD >>>', newFood);
+    setfoodList([...foodList, newFood]);
+  };
+  // console.log("FOODS >>>", foodList);
+
+  let searchedFood = null
+  if (inputSearch !== "") {
+    searchedFood = foodList.filter((food) => {
+      return food.name.toLocaleLowerCase().includes(inputSearch.toLocaleLowerCase())
+    })
+  } else {
+    searchedFood = foodList
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Foods list</h1>
+      <FoodSearch
+        inputSearch={inputSearch}
+        callbackSearch={setInputSearch} />
+      <FoodBox foods={foodList} searchedFood={searchedFood} />
+      <h1>Add new food</h1>
+      <AddFood createHandler={addNewFood} />
     </div>
   );
 }
