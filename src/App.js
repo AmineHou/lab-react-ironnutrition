@@ -9,12 +9,15 @@ import FoodSearch from './components/FoodSearch';
 function App() {
   const [foodList, setfoodList] = useState(foods)
   const [inputSearch, setInputSearch] = useState("")
+  const [hidden, setHidden] = useState(true)
 
   const addNewFood = (newFood) => {
     // console.log('NEWFOOD >>>', newFood);
     setfoodList([...foodList, newFood]);
+    setHidden(!hidden)
   };
   // console.log("FOODS >>>", foodList);
+
 
   let searchedFood = null
   if (inputSearch !== "") {
@@ -31,9 +34,11 @@ function App() {
       <FoodSearch
         inputSearch={inputSearch}
         callbackSearch={setInputSearch} />
-      <FoodBox foods={foodList} searchedFood={searchedFood} />
       <h1>Add new food</h1>
-      <AddFood createHandler={addNewFood} />
+      <button hidden={!hidden} onClick={() => setHidden(!hidden)} >Add food</button>
+      {!hidden && <AddFood createHandler={addNewFood} />}
+      <FoodBox foods={searchedFood} />
+
     </div>
   );
 }

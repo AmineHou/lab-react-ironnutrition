@@ -34,11 +34,10 @@ const AddFood = ({ createHandler }) => {
 
       <label htmlFor="image">Image</label>
       <input
-        type="text"
+        type="file"
         name="image"
         id="image"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
+        onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))}
       />
 
       <button>Add new food</button>

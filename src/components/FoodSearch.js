@@ -6,7 +6,7 @@ const FoodSearch = ({ inputSearch, callbackSearch }) => {
       <input
         type="text"
         placeholder="Search food"
-        value={inputSearch}
+        // value={inputSearch}
         onChange={(e) => callbackSearch(e.target.value)} />
     </>
   )
